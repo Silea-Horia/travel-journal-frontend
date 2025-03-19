@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import './App.css';
+const service = require('../services/Service.jsx');
+const repository = require('../repo/Repository.jsx');
 
 function App() {
-    const [data, setData] = useState([
+    const initialLocations = [
         { id: 1, name: 'The Eiffel Tower', dateVisited: '2025-08-10', rating: 5 },
         { id: 2, name: 'Sibiu', dateVisited: '2004-01-14', rating: 5 },
-    ]);
+    ];
+    const repo = new repository.Repository([...initialLocations]);
+    const serv = new service.Service(repo);
+
+    const [data, setData] = useState(serv.getAll());
 
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedRatings, setSelectedRatings] = useState([]);
